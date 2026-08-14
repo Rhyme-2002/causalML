@@ -63,7 +63,7 @@ truncpow <- function(x, knot, direction = 1){
 #' variables.
 #' @param treatment Binary treatment variable coded as numeric 0 and 1.
 #' Must not be a factor.
-#' @param y Numeric outcome variable. Must be numeric and not a factor.
+#' @param y Binary outcome variable coded as numeric 0 and 1. Must not be a factor.
 #' @param maxterms Maximum number of basis functions allowed in the model.
 #' @param nquant Number of quantile-based candidate knot points considered
 #' for each covariate.
