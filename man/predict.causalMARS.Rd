@@ -7,8 +7,7 @@
   from a fitted causal MARS model.
 }
 \usage{
-  \method{predict}{causalMARS}(object, newdata = NULL, type = "response")
-}
+predict.causalMARS(object, newdata = NULL, type = "response")
 \arguments{
   \item{object}{
     A fitted object of class \code{causalMARS}.
