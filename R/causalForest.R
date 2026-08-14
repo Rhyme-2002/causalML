@@ -34,12 +34,7 @@
 #' Y <- rbinom(100, 1, 0.5)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
-#' result <- causalForest(
-#'   X = X,
-#'   Y = Y,
-#'   treatment = treatment,
-#'   no_of_tree = 500
-#' )
+#' result <- causalForest(X = X, Y = Y, treatment = treatment, no_of_tree = 500)
 #'
 #' # Estimate CATE
 #' cate <- predict(result)$predictions
