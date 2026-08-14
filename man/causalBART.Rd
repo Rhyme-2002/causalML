@@ -12,7 +12,7 @@
 }
 
 \usage{
-  causalBART(X, Y, treatment, PS_adjusted = FALSE)
+causalBART(X, Y, treatment, PS_adjusted = FALSE)
 }
 
 \arguments{
