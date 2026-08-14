@@ -336,7 +336,7 @@ compare_model <- function(Y, X, treatment,
     ARB_df[i, "parametric_standardization"] <- abs((ATE - true_ATE) / true_ATE)
   }
   
-  RMSE_long <- RMSE_df %>%
+  RMSE_long <- RMSE_df |>
     tidyr::pivot_longer(cols = -Simulation, names_to = "Model", values_to = "RMSE")
   
   RMSE_plot <- ggplot2::ggplot(RMSE_long, ggplot2::aes(x = Model, y = RMSE)) +
@@ -344,7 +344,7 @@ compare_model <- function(Y, X, treatment,
     ggplot2::labs(x = "Model", y = "RMSE", title = "RMSE Across Simulations") +
     ggplot2::theme_classic()
   
-  ARB_long <- ARB_df %>%
+  ARB_long <- ARB_df |>
     tidyr::pivot_longer(cols = -Simulation, names_to = "Model", values_to = "ARB")
   
   ARB_plot <- ggplot2::ggplot(ARB_long, ggplot2::aes(x = Model, y = ARB)) +
