@@ -1,3 +1,13 @@
+#### compare_model ####
+
+calculate_performance <- function(CATE_hat, ATE_hat, TRUE_CATE, TRUE_ATE){
+  
+  CATE_RMSE <- sqrt(mean((CATE_hat - TRUE_CATE)^2))
+  ARB <- abs((ATE_hat - TRUE_ATE) / TRUE_ATE)
+  
+  return(data.frame(CATE_RMSE = CATE_RMSE, ARB = ARB))
+}
+
 #' Compare Causal Machine Learning Models
 #'
 #' Compares the performance of multiple causal inference and causal
@@ -215,25 +225,17 @@
 #' \dontrun{
 #' x1 <- rnorm(100)
 #' x2 <- rnorm(100)
-#' X <- model.matrix(~ x1 + x2)
+#' x3 <- rnorm(100)
+#' x4 <- rnorm(100)
+#' x5 <- rnorm(100)
+#'
+#' X <- model.matrix(~ x1 + x2 + x3 + x4 + x5)
 #' Y <- rbinom(100, 1, 0.5)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
 #' # Compare causal models using a logistic outcome model
-#' result <- compare_model(
-#'   Y = Y,
-#'   X = X,
-#'   treatment = treatment,
-#'   model_data_simulation = "logit",
-#'   sim = 10,
-#'   compare_model = c(
-#'     "causalMARS",
-#'     "causal_boosting",
-#'     "causal_forest",
-#'     "causal_BART",
-#'     "causal_Additive_Forest"
-#'   )
-#' )
+#' result <- compare_model(Y = Y, X = X, treatment = treatment, model_data_simulation = "logit", sim = 10,
+#' compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "causal_Additive_Forest"))
 #'
 #' # RMSE results
 #' result$RMSE_df
