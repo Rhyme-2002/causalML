@@ -72,3 +72,26 @@ Install the development version directly from GitHub:
 install.packages("remotes")
 
 remotes::install_github("Rhyme-2002/causalML")
+```
+
+---
+
+## 👨‍💻 Author
+
+### Abu Sufiun Rhyme
+
+**Institute of Applied Statistics and Data Science (IASDS)**  
+*Formerly Institute of Statistical Research and Training (ISRT)*  
+**University of Dhaka**
+
+📧 **Email:**  
+<a href="mailto:asrhyme@isrt.ac.bd">
+asrhyme@isrt.ac.bd
+</a>
+
+💼 **LinkedIn:**  
+<a href="https://www.linkedin.com/in/abu-sufiun-rhyme/">
+Abu Sufiun Rhyme
+</a>
+
+---
