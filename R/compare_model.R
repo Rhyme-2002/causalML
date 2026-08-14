@@ -307,7 +307,7 @@ compare_model <- function(Y, X, treatment,
       ATE <- model_boosting$ate
       RMSE_df[i, "causal_boosting"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causal_boosting"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
-      print("boosting ending")
+      print("CAUSAL BOOSTING END")
     }
     
     if("causal_forest" %in% compare_model){
