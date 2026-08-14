@@ -6,8 +6,8 @@
 #'
 #' @param X A model matrix containing the covariates used in the
 #'   outcome model.
-#' @param Y A binary numeric outcome variable coded as 0 and 1.
-#' @param treatment A binary numeric treatment variable coded as 0 and 1.
+#' @param Y Binary treatment variable coded as numeric 0 and 1. Must be numeric and not a factor.
+#' @param treatment Binary treatment variable coded as numeric 0 and 1. Must be numeric and not a factor.
 #'
 #' @return An object of class \code{parametric_standardization} containing:
 #' \describe{
