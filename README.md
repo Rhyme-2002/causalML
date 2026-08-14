@@ -47,8 +47,8 @@ mechanisms.
 
 | Feature | Description |
 |:---|:---|
-| 🎯 **CATE estimation** | Estimate heterogeneous treatment effects |
-| 📊 **ATE estimation** | Estimate population-average treatment effects |
+| 🎯 **CATE Estimation** | Estimate heterogeneous treatment effects |
+| 📊 **ATE Estimation** | Estimate population-average treatment effects |
 | 🌳 **Causal Forest** | Estimate heterogeneous effects using causal forests |
 | 🌲 **Causal BART** | Bayesian Additive Regression Trees for causal effects |
 | 🌿 **Causal Boosting** | Boosting-based heterogeneous treatment effect estimation |
