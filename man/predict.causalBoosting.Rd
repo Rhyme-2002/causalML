@@ -9,13 +9,13 @@
 }
 
 \usage{
-  \method{predict}{causalBoosting}(object, newdata)
+predict.causalBoosting(object, newdata)
 }
 
 \arguments{
   \item{object}{A fitted object of class \code{causal_boosting}.}
   
-  \item{newdata}{A matrix or data frame containing covariates
+  \item{newdata}{A model matrix containing covariates
     for prediction.}
 }
 
