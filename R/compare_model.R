@@ -288,7 +288,7 @@ compare_model <- function(Y, X, treatment,
       RMSE_df[i, "BART with PS"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "BART with PS"] <- abs((ATE - true_ATE) / true_ATE)
       
-      print("end bart")
+      print("BART END")
     }
     
     if("causalMARS" %in% compare_model){
@@ -298,7 +298,7 @@ compare_model <- function(Y, X, treatment,
       RMSE_df[i, "causalMARS"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causalMARS"] <- abs((ATE - true_ATE) / true_ATE)
       
-      print("mars")
+      print("MARS END")
     }
     
     if("causal_boosting" %in% compare_model){
@@ -317,7 +317,7 @@ compare_model <- function(Y, X, treatment,
       ATE <- result_forest$ATE
       RMSE_df[i, "causal_forest"] <- sqrt(mean((CATE$CATE - true_CATE)^2))
       ARB_df[i, "causal_forest"] <- abs((ATE - true_ATE) / true_ATE)
-      print("forest sesh")
+      print("CAUSAL FOREST END")
     }
     
     if("causal_Additive_Forest" %in% compare_model){
@@ -326,7 +326,7 @@ compare_model <- function(Y, X, treatment,
       ATE <- model_addative_forest$ATE
       RMSE_df[i, "causal_Additive_Forest"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causal_Additive_Forest"] <- abs((ATE - true_ATE) / true_ATE)
-      print("additive sesh")
+      print("ADDITIVE CAUSAL FOREST END")
     }
     
     model_parametric_standardization <- parametric_standardization(X = X, Y = Y1, treatment = treatment)
