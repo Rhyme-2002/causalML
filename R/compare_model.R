@@ -306,7 +306,7 @@ compare_model <- function(Y, X, treatment,
       CATE <- model_boosting$cate
       ATE <- model_boosting$ate
       RMSE_df[i, "causal_boosting"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "causal_boosting"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "causal_boosting"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       print("boosting ending")
     }
     
