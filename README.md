@@ -51,10 +51,10 @@ mechanisms.
 | 📊 **ATE estimation** | Estimate population-average treatment effects |
 | 🌳 **Causal Forest** | Estimate heterogeneous effects using causal forests |
 | 🌲 **Causal BART** | Bayesian Additive Regression Trees for causal effects |
-| 🌿 **Causal Boosting** | Boosting based heterogeneous treatment effect estimation |
+| 🌿 **Causal Boosting** | Boosting-based heterogeneous treatment effect estimation |
 | 📐 **Causal MARS** | Multivariate Adaptive Regression Splines |
 | 🌳 **Additive Causal Forest** | Additive treatment-effect estimation |
-| 📈 **Parametric Standardization** | Logistic regression based standardization |
+| 📈 **Parametric Standardization** | Logistic regression-based standardization |
 | 🧪 **Simulation** | Generate potential outcome probabilities |
 | ⚖️ **Model Comparison** | Compare multiple causal estimators |
 | 📏 **Performance Evaluation** | CATE RMSE and ATE ARB |
