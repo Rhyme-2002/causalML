@@ -55,6 +55,8 @@
 #' Y <- rnorm(100)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
+#' result <- parametric_standardization(X = X, Y = Y, treatment = treatment)
+#'
 #' result$causal_result
 #' result$CATE
 #' result$ATE
