@@ -99,7 +99,7 @@ predict_causal(object, newdata = NULL, ...)
     x4 <- rnorm(100)
     x5 <- rnorm(100)
     
-    X <- model.matrix(~ x1 + x2 + x3 + x4 + x5)
+    X <- model.matrix(~ x1 + x2 + x3 + x4 + x5)[, -1]
     Y <- rbinom(100, 1, 0.5)
     treatment <- rbinom(100, 1, 0.5)
     
