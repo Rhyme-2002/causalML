@@ -49,7 +49,6 @@
 #'
 #' @export
 predict.causalMARS <- function(object, newdata = NULL, type = "response"){
-predict.causalMARS <- function(object, newdata = NULL, type = "response"){
   if(!inherits(object, "causalMARS")){
     stop("object must be a causalMARS model.")
   }
