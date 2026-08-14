@@ -1,0 +1,29 @@
+Package: causalML
+Type: Package
+Title: Causal Machine Learning Methods
+Version: 0.1.0
+Authors@R:
+    person(
+        "Abu Sufiun",
+        "Rhyme",
+        email = "asrhyme@isrt.ac.bd",
+        role = c("aut", "cre")
+    )
+Description:
+    Provides functions for causal machine learning, including
+    causal additive forests, causal boosting, causal BART,
+    causal forests, causal MARS, model comparison, causal
+    prediction, parametric standardization, and causal data
+    simulation. The package is designed for estimating
+    heterogeneous treatment effects, including conditional
+    average treatment effects (CATE) and average treatment
+    effects (ATE), and for evaluating causal machine learning
+    methods through simulation studies.
+License: MIT
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    bcf,
+    BART,
+    grf
