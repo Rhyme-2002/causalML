@@ -15,12 +15,11 @@ causalMARS(x, treatment, y, maxterms = 11, nquant = 5,
   }
   
   \item{treatment}{
-    Binary treatment variable coded as numeric 0 and 1.
-    Must not be a factor.
+    Binary treatment variable coded as numeric 0 and 1. Must not be a factor.
   }
   
   \item{y}{
-    Numeric outcome variable. Must be numeric and not a factor.
+    Binary outcome variable coded as numeric 0 and 1. Must not be a factor.
   }
   
   \item{maxterms}{
