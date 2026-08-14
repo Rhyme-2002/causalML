@@ -250,7 +250,7 @@ predict_causal_tree <- function(tree, newdata){
 #' Y <- rnorm(100)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
-#' result <- causal_Additive_Forest(X = X, Y = Y,treatment = treatment)
+#' result <- causal_boosting(X = X, y = Y,treatment = treatment)
 #' result$fit
 #' result$CATE
 #' result$ATE
