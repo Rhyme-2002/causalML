@@ -15,7 +15,7 @@ A fitted object of class \code{causalMARS}.
 }
 
 \item{newdata}{
-A numeric matrix containing the same covariates used to fit
+A model matrix containing the same covariates used to fit
 the causal MARS model. If \code{NULL}, the original training
 data are used.
 }
