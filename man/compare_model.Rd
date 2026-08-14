@@ -218,12 +218,12 @@ compare_model(Y, X, treatment, model_data_simulation = "logit", sim = 100,
     of the ATE:
       
       \deqn{
-        ARB =
-          \left|
-          \frac{\widehat{ATE}-TRUE\_ATE}
-        {TRUE\_ATE}
-        \right|.
-      }
+  ARB =
+  \left|
+  \frac{\widehat{ATE}-TRUE\_ATE}
+       {TRUE\_ATE}
+  \right| \times 100
+}
     
     A smaller ARB indicates that the estimated ATE is closer to the true
     ATE.
