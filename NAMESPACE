@@ -1,1 +1,4 @@
 export(causal_Additive_Forest)
+export(causal_boosting)
+export(predict.causalBoosting)
+
