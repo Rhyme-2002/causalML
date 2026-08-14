@@ -80,8 +80,7 @@ remotes::install_github("Rhyme-2002/causalML")
 
 ### Abu Sufiun Rhyme
 
-**Institute of Applied Statistics and Data Science (IASDS)**  
-*Formerly Institute of Statistical Research and Training (ISRT)*  
+**Institute of Applied Statistics and Data Science (IASDS, Formerly ISRT)** 
 **University of Dhaka**
 
 📧 **Email:**  
