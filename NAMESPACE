@@ -4,4 +4,4 @@ export(predict.causalBoosting)
 export(causalMARS)
 export(predict.causalMARS)
 export(parametric_standardization)
-
+export(causalForest)
