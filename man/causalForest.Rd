@@ -6,7 +6,7 @@
 }
 
 \usage{
-  causalForest(X, Y, treatment, no_of_tree = 500)
+causalForest(X, Y, treatment, no_of_tree = 500)
 }
 
 \arguments{
