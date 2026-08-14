@@ -27,4 +27,6 @@ URL: https://github.com/Rhyme-2002/causalML
 Imports:
     bcf,
     BART,
-    grf
+    grf,
+    ggplot2,
+    tidyr
