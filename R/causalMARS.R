@@ -157,11 +157,23 @@ causalMARS <- function(x, treatment, y, maxterms = 11, nquant = 5,
   }
   
   
-  keep <- apply(x, 2, function(z){length(unique(z)) > 1})
+if(!is.null(colnames(x)) && "(Intercept)" %in% colnames(x)){
+    intercept_col <- which(colnames(x) == "(Intercept)")
+    keep <- apply(x, 2, function(z){
+      length(unique(z)) > 1
+    })
+    keep[intercept_col] <- TRUE
+    
+  }else{
+    keep <- apply(x, 2, function(z){
+      length(unique(z)) > 1
+    })
+  }
   removed <- which(!keep)
   if(length(removed) > 0){
     if(verbose){
-      cat("Removing", length(removed), "zero-variance variables.\n")}
+      cat("Removing", length(removed), "zero-variance variables.\n")
+    }
     x <- x[, keep, drop = FALSE]
   }
   
