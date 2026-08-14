@@ -106,7 +106,7 @@ predict_causal <- function(object, newdata = NULL, ...) {
     ATE <- mean(pred$predictions)
     return(list(CATE = CATE, ATE = ATE))
   }
-  if(inherits(object, "causal_BART")){
+  if(inherits(object, "BART")){
     return(predict.causalBART(object = object, newdata = newdata, ...))
   }
   else{
