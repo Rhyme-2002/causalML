@@ -9,9 +9,8 @@
 }
 
 \usage{
-  causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
-                  learning_rate = 0.01, split_spread = 0.1,
-                  verbose = TRUE)
+causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
+                learning_rate = 0.01, split_spread = 0.1, verbose = TRUE)
 }
 
 \arguments{
