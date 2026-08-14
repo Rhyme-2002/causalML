@@ -14,9 +14,10 @@ causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
 }
 
 \arguments{
-  \item{X}{A numeric matrix of covariates.}
+  \item{X}{A model matrix of covariates.}
   
-  \item{y}{Numeric outcome variable. Must be numeric, not a factor.}
+  \item{y}{Binary outcome variable. Must be numeric and
+    coded as 0 and 1, not a factor.}
   
   \item{treatment}{Binary treatment variable. Must be numeric and
     coded as 0 and 1, not a factor.}
@@ -63,11 +64,7 @@ causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
     Y <- rnorm(100)
     treatment <- rbinom(100, 1, 0.5)
     
-    result <- causal_boosting(
-      X = X,
-      y = Y,
-      treatment = treatment
-    )
+    result <- causal_boosting(X = X, y = Y, treatment = treatment)
     
     result$cate
     result$ate
