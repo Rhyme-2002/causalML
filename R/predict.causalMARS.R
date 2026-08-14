@@ -12,21 +12,38 @@
 #' Must be one of `"CATE"`, `"mu0"`, `"mu1"`, or `"response"`.
 #' The default is `"response"`.
 #'
-#' @return If `type = "CATE"`, a numeric vector containing the estimated
-#' CATE values.
-#'
-#' If `type = "mu0"`, a numeric vector containing the predicted control
-#' potential outcomes Y(0).
-#'
-#' If `type = "mu1"`, a numeric vector containing the predicted treated
-#' potential outcomes Y(1).
-#'
-#' If `type = "response"`, a list containing:
+#' @return A value determined by the \code{type} argument.
+#' 
 #' \describe{
-#'   \item{CATE_result}{A data frame containing predicted Y(0), Y(1),
-#'   and CATE.}
-#'   \item{ATE}{The average treatment effect calculated from the
-#'   predicted CATE values.}
+#'   \item{\code{type = "CATE"}}{
+#'     A numeric vector containing the estimated conditional
+#'     average treatment effects (CATE).
+#'   }
+#'
+#'   \item{\code{type = "mu0"}}{
+#'     A numeric vector containing the predicted control potential
+#'     outcomes Y(0).
+#'   }
+#'
+#'   \item{\code{type = "mu1"}}{
+#'     A numeric vector containing the predicted treated potential
+#'     outcomes Y(1).
+#'   }
+#'
+#'   \item{\code{type = "response"}}{
+#'     A list containing:
+#'
+#'     \describe{
+#'       \item{\code{CATE_result}}{
+#'         A data frame containing predicted Y(0), Y(1), and CATE.
+#'       }
+#'
+#'       \item{\code{ATE}}{
+#'         The average treatment effect calculated from the
+#'         predicted CATE values.
+#'       }
+#'     }
+#'   }
 #' }
 #'
 #' @examples
