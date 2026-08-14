@@ -6,7 +6,7 @@ Authors@R:
     person(
         "Abu Sufiun",
         "Rhyme",
-        email = email = <a href="mailto:asrhyme@isrt.ac.bd">asrhyme@isrt.ac.bd</a>,
+        email = <a href="mailto:asrhyme@isrt.ac.bd">asrhyme@isrt.ac.bd</a>,
         role = c("author", "creator")
     )
 Description:
