@@ -7,7 +7,7 @@
   causal BART model.
 }
 \usage{
-  predict.causalBART(object, newdata)
+predict.causalBART(object, newdata)
 }
 \arguments{
   \item{object}{
