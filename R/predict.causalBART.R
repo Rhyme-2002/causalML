@@ -51,7 +51,7 @@
 #' \dontrun{
 #' x1 <- rnorm(100)
 #' x2 <- rnorm(100)
-#' X <- model.matrix(~ x1 + x2)
+#' X <- model.matrix(~ x1 + x2)[, -1]
 #' Y <- rbinom(100, 1, 0.5)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
