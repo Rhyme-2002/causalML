@@ -1,13 +1,3 @@
-#### compare_model ####
-
-calculate_performance <- function(CATE_hat, ATE_hat, TRUE_CATE, TRUE_ATE){
-  
-  CATE_RMSE <- sqrt(mean((CATE_hat - TRUE_CATE)^2))
-  ARB <- abs((ATE_hat - TRUE_ATE) / TRUE_ATE)
-  
-  return(data.frame(CATE_RMSE = CATE_RMSE, ARB = ARB))
-}
-
 #' Compare Causal Machine Learning Models
 #'
 #' Compares the performance of multiple causal inference and causal
