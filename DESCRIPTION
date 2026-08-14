@@ -6,8 +6,8 @@ Authors@R:
     person(
         "Abu Sufiun",
         "Rhyme",
-        email = "asrhyme@isrt.ac.bd",
-        role = c("aut", "cre")
+        email = email = <a href="mailto:asrhyme@isrt.ac.bd">asrhyme@isrt.ac.bd</a>,
+        role = c("author", "creator")
     )
 Description:
     Provides functions for causal machine learning, including
