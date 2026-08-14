@@ -16,7 +16,7 @@ parametric_standardization(X, Y, treatment)
   }
   
   \item{Y}{
-    Numeric outcome variable. Must be numeric and not a factor.
+    Binary outcome variable coded as numeric 0 and 1. Must be numeric and not a factor.
   }
   
   \item{treatment}{
