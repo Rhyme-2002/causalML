@@ -30,4 +30,5 @@ Imports:
     grf,
     ggplot2,
     tidyr,
-    dplyr
+    dplyr,
+    magrittr
