@@ -36,17 +36,9 @@ predict.causalBoosting(object, newdata)
     X <- model.matrix(~ x1 + x2)
     Y <- rnorm(100)
     treatment <- rbinom(100, 1, 0.5)
-    
-    result <- causal_boosting(
-      X = X,
-      y = Y,
-      treatment = treatment
-    )
-    
-    prediction <- predict.causalBoosting(
-      object = result,
-      newdata = X
-    )
+
+    result <- causal_boosting(X = X, y = Y, treatment = treatment)
+    prediction <- predict.causalBoosting(object = result, newdata = X)
     
     prediction$CATE_results
     prediction$ATE
