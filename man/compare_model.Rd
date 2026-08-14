@@ -13,21 +13,9 @@
   Wendling et al. (2018).
 }
 \usage{
-  compare_model(
-    Y,
-    X,
-    treatment,
-    model_data_simulation = "logit",
-    sim = 100,
-    compare_model = c(
-      "causalMARS",
-      "causal_boosting",
-      "causal_forest",
-      "causal_BART",
-      "causal_Additive_Forest"
-    ),
-    ...
-  )
+compare_model(Y, X, treatment, model_data_simulation = "logit", sim = 100,
+    compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "causal_Additive_Forest"),
+    ...)
 }
 \arguments{
   \item{Y}{
@@ -251,9 +239,11 @@
   
 }
 \references{
-  The simulation framework is based on the causal machine learning
-  simulation framework described by Wendling et al. (2018).
-  \url{https://doi.org/10.1515/jci-2017-0010}
+The simulation study follows the framework described by:
+Wendling, T., Jung, K., Callahan, A., Schuler, A., Shah, N. H., Gallego, B. (2018).
+Comparing methods for estimation of heterogeneous treatment effects using observational data from health care databases.
+\emph{Statistics in Medicine}.
+\url{https://doi.org/10.1002/sim.7820}
 }
 \seealso{
   \code{\link{simulate_causal_data}},
