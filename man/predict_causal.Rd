@@ -13,7 +13,7 @@
 }
 
 \usage{
-  predict_causal(object, newdata = NULL, ...)
+predict_causal(object, newdata = NULL, ...)
 }
 
 \arguments{
