@@ -88,14 +88,14 @@
 #' @export
 causalBART <- function(X, Y, treatment, PS_adjusted = FALSE){
   if(PS_adjusted == FALSE){
-    X2 <- cbind(treatment, X)
+    X2 <- cbind(treatment = treatment, X)
     BART0_model <- BART::pbart(x.train = X2, y.train = Y)
     
-    X0 <- cbind(rep(0, nrow(X2)), X)
+    X0 <- cbind(treatment = rep(0, nrow(X2)), X)
     p0 <- predict(object = BART0_model, newdata = X0)
     Yhat0 <- p0$prob.test.mean
     
-    X1 <- cbind(rep(1, nrow(X2)), X)
+    X1 <- cbind(treatment = rep(1, nrow(X2)), X)
     p1 <- predict(object = BART0_model, newdata = X1)
     Yhat1 <- p1$prob.test.mean
     
