@@ -89,7 +89,7 @@
 causalBART <- function(X, Y, treatment, PS_adjusted = FALSE){
   if(PS_adjusted == FALSE){
     X2 <- cbind(treatment = treatment, X)
-    BART0_model <- BART::pbart(x.train = X2, y.train = Y)
+    BART0_model <- BART::pbart(x.train = X2, y.train = Y, rm.const = FALSE)
     
     X0 <- cbind(treatment = rep(0, nrow(X2)), X)
     p0 <- predict(object = BART0_model, newdata = X0)
@@ -106,11 +106,11 @@ causalBART <- function(X, Y, treatment, PS_adjusted = FALSE){
                 PS_adjusted = FALSE, model = BART0_model, class = "BART"))
   }
   if(PS_adjusted == TRUE){
-    PS_model <- BART::pbart(x.train = X, y.train = treatment)
+    PS_model <- BART::pbart(x.train = X, y.train = treatment, rm.const = FALSE)
     PS <- PS_model$prob.train.mean
     
     X2 <- cbind(treatment = treatment, X, PS = PS)
-    BART1_model <- BART::pbart(x.train = X2, y.train = Y)
+    BART1_model <- BART::pbart(x.train = X2, y.train = Y, rm.const = FALSE)
     
     X0 <- cbind(treatment = rep(0, nrow(X)), X, PS = PS)
     p0 <- predict(object = BART1_model, newdata = X0)
