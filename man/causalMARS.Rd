@@ -6,11 +6,11 @@
   multivariate adaptive regression splines (MARS) algorithm.
 }
 \usage{
-causalMARS(x, treatment, y, maxterms = 11, nquant = 5,
+causalMARS(X, treatment, Y, maxterms = 11, nquant = 5,
            degree = 2, eps = 1, lambda = 1e-6, verbose = TRUE)
 }
 \arguments{
-  \item{x}{
+  \item{X}{
     A model matrix containing the confounder variables.
   }
   
@@ -18,7 +18,7 @@ causalMARS(x, treatment, y, maxterms = 11, nquant = 5,
     Binary treatment variable coded as numeric 0 and 1. Must not be a factor.
   }
   
-  \item{y}{
+  \item{Y}{
     Binary outcome variable coded as numeric 0 and 1. Must not be a factor.
   }
   
@@ -81,7 +81,7 @@ causalMARS(x, treatment, y, maxterms = 11, nquant = 5,
       Variables used in each basis function.
     }
     
-    \item{x}{
+    \item{X}{
       Processed covariate matrix used for fitting.
     }
     
@@ -89,7 +89,7 @@ causalMARS(x, treatment, y, maxterms = 11, nquant = 5,
       Centered covariate matrix.
     }
     
-    \item{y}{
+    \item{Y}{
       Processed outcome variable.
     }
     
