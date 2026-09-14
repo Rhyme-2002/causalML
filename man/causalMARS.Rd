@@ -154,7 +154,7 @@ causalMARS(X, treatment, Y, maxterms = 11, nquant = 5,
     Y <- rnorm(100)
     treatment <- rbinom(100, 1, 0.5)
     
-    result <- causalMARS(x = X, treatment = treatment, y = Y)
+    result <- causalMARS(X = X, treatment = treatment, Y = Y)
     
     result$cate
     result$ate
