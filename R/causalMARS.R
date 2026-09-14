@@ -93,10 +93,10 @@ truncpow <- function(x, knot, direction = 1){
 #'   \item{fit1}{Fitted model for the treated potential outcome Y(1).}
 #'   \item{y0_hat}{Estimated control potential outcomes.}
 #'   \item{y1_hat}{Estimated treated potential outcomes.}
-#'   \item{cate}{Estimated conditional average treatment effects (CATE).}
-#'   \item{ate}{Estimated average treatment effect (ATE).}
-#'   \item{cate_history}{CATE estimates recorded during model building.}
-#'   \item{mse}{Factual prediction mean squared error at each step.}
+#'   \item{CATE}{Estimated conditional average treatment effects (CATE).}
+#'   \item{ATE}{Estimated average treatment effect (ATE).}
+#'   \item{CATE_history}{CATE estimates recorded during model building.}
+#'   \item{MSE}{Factual prediction mean squared error at each step.}
 #' }
 #'
 #' @examples
