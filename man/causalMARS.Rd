@@ -125,19 +125,19 @@ causalMARS(X, treatment, Y, maxterms = 11, nquant = 5,
       Estimated treated potential outcomes.
     }
     
-    \item{cate}{
+    \item{CATE}{
       Estimated conditional average treatment effects (CATE).
     }
     
-    \item{ate}{
+    \item{ATE}{
       Estimated average treatment effect (ATE).
     }
     
-    \item{cate_history}{
+    \item{CATE_history}{
       CATE estimates recorded during model building.
     }
     
-    \item{mse}{
+    \item{MSE}{
       Factual prediction mean squared error at each step.
     }
     
@@ -156,8 +156,8 @@ causalMARS(X, treatment, Y, maxterms = 11, nquant = 5,
     
     result <- causalMARS(X = X, treatment = treatment, Y = Y)
     
-    result$cate
-    result$ate
+    result$CATE
+    result$ATE
   }
 }
 \keyword{causal}
