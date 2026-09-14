@@ -71,11 +71,11 @@ predict.causalMARS <- function(object, newdata = NULL, type = "response"){
   }
   
   if(is.null(newdata)){
-    newdata <- object$x
+    newdata <- object$X
   }
   newdata <- as.matrix(newdata)
   
-  if(ncol(newdata) != ncol(object$x)){
+  if(ncol(newdata) != ncol(object$X)){
     stop("newdata must have ", ncol(object$x), " columns. ", "Received ", ncol(newdata), ".")
   }
   
