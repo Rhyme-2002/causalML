@@ -59,11 +59,11 @@ truncpow <- function(x, knot, direction = 1){
 #' Estimates heterogeneous treatment effects using a causal
 #' multivariate adaptive regression splines (MARS) algorithm.
 #'
-#' @param x A model matrix containing the confounder
+#' @param X A model matrix containing the confounder
 #' variables.
 #' @param treatment Binary treatment variable coded as numeric 0 and 1.
 #' Must not be a factor.
-#' @param y Binary outcome variable coded as numeric 0 and 1. Must not be a factor.
+#' @param Y Binary outcome variable coded as numeric 0 and 1. Must not be a factor.
 #' @param maxterms Maximum number of basis functions allowed in the model.
 #' @param nquant Number of quantile-based candidate knot points considered
 #' for each covariate.
@@ -82,9 +82,9 @@ truncpow <- function(x, knot, direction = 1){
 #'   \item{direction}{Direction of the truncated power basis functions.}
 #'   \item{basis_degree}{Degree of each basis function.}
 #'   \item{basis_variables}{Variables used in each basis function.}
-#'   \item{x}{Processed covariate matrix used for fitting.}
+#'   \item{X}{Processed covariate matrix used for fitting.}
 #'   \item{x_scaled}{Centered covariate matrix.}
-#'   \item{y}{Processed outcome variable.}
+#'   \item{Y}{Processed outcome variable.}
 #'   \item{treatment}{Processed binary treatment variable.}
 #'   \item{x_center}{Column means used to center the covariates.}
 #'   \item{variable_names}{Names of the covariates.}
@@ -114,12 +114,12 @@ truncpow <- function(x, knot, direction = 1){
 #' }
 #'
 #' @export
-causalMARS <- function(x, treatment, y, maxterms = 11, nquant = 5,
+causalMARS <- function(X, treatment, Y, maxterms = 11, nquant = 5,
                        degree = 2, eps = 1, lambda = 1e-6, verbose = TRUE){
   tx <- treatment
-  x <- as.matrix(x)
+  x <- as.matrix(X)
   tx <- as.numeric(tx)
-  y <- as.numeric(y)
+  y <- as.numeric(Y)
   
   if(nrow(x) != length(y)){
     stop("x and y have different numbers of observations.")
@@ -350,7 +350,7 @@ if(!is.null(colnames(x)) && "(Intercept)" %in% colnames(x)){
   
   result <- list(basis = basis, parent = parent, variable = variable, knot = knot, 
                  direction = direction, basis_degree = basis_degree, basis_variables = basis_variables,
-                 x = x, x_scaled = x_scaled, y = y, treatment = tx, x_center = x_center, 
+                 X = x, x_scaled = x_scaled, Y = y, treatment = tx, x_center = x_center, 
                  variable_names = colnames(x), quantiles = quantiles, fit0 = fit0, fit1 = fit1,
                  y0_hat = y0_hat, y1_hat = y1_hat, cate = cate, ate = ate, cate_history = cate_history,
                  mse = mse_history, maxterms = maxterms, nterms = ncol(basis), nquant = nquant,
