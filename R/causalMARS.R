@@ -352,8 +352,8 @@ if(!is.null(colnames(x)) && "(Intercept)" %in% colnames(x)){
                  direction = direction, basis_degree = basis_degree, basis_variables = basis_variables,
                  X = x, x_scaled = x_scaled, Y = y, treatment = tx, x_center = x_center, 
                  variable_names = colnames(x), quantiles = quantiles, fit0 = fit0, fit1 = fit1,
-                 y0_hat = y0_hat, y1_hat = y1_hat, cate = cate, ate = ate, cate_history = cate_history,
-                 mse = mse_history, maxterms = maxterms, nterms = ncol(basis), nquant = nquant,
+                 y0_hat = y0_hat, y1_hat = y1_hat, CATE = cate, ATE = ate, CATE_history = cate_history,
+                 MSE = mse_history, maxterms = maxterms, nterms = ncol(basis), nquant = nquant,
                  degree = degree, eps = eps, lambda = lambda)
   class(result) <- "causalMARS"
   return(result)
