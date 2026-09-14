@@ -257,10 +257,10 @@ predict_causal_tree <- function(tree, newdata){
 #' }
 #'
 #' @export
-causal_boosting <- function(X, y, treatment, n_trees = 100, max_leaves = 4,
+causal_boosting <- function(X, Y, treatment, n_trees = 100, max_leaves = 4,
                             learning_rate = 0.01, split_spread = 0.1, verbose = TRUE){
   X <- as.matrix(X)
-  y <- as.numeric(y)
+  y <- as.numeric(Y)
   treatment <- as.numeric(treatment)
   
   if(nrow(X) != length(y)){
