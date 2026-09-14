@@ -9,14 +9,14 @@
 }
 
 \usage{
-causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
+causal_boosting(X, Y, treatment, n_trees = 100, max_leaves = 4,
                 learning_rate = 0.01, split_spread = 0.1, verbose = TRUE)
 }
 
 \arguments{
   \item{X}{A model matrix of covariates.}
   
-  \item{y}{Binary outcome variable. Must be numeric and
+  \item{Y}{Binary outcome variable. Must be numeric and
     coded as 0 and 1, not a factor.}
   
   \item{treatment}{Binary treatment variable. Must be numeric and
@@ -64,7 +64,7 @@ causal_boosting(X, y, treatment, n_trees = 100, max_leaves = 4,
     Y <- rnorm(100)
     treatment <- rbinom(100, 1, 0.5)
     
-    result <- causal_boosting(X = X, y = Y, treatment = treatment)
+    result <- causal_boosting(X = X, Y = Y, treatment = treatment)
     
     result$cate
     result$ate
