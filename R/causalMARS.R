@@ -109,8 +109,8 @@ truncpow <- function(x, knot, direction = 1){
 #'
 #' result <- causalMARS(x = X, treatment = treatment, y = Y)
 #'
-#' result$cate
-#' result$ate
+#' result$CATE
+#' result$ATE
 #' }
 #'
 #' @export
