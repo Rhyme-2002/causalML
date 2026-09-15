@@ -293,34 +293,7 @@ distribute_C <- function(Y, Z, frequency_table, set_seed = 102) {
 #'
 #' @import ggplot2
 #' @importFrom stats quantile
-#' @export
-sensitivity_analysis <- function(Y, treatment, X,
-                                 P_C = seq(0.1, 1, 0.1),
-                                 RD_CZ = seq(-1, 1, 0.1),
-                                 RD_CY  = seq(-1, 1, 0.1),
-                                 causal_method,
-                                 Simulation = 1,
-                                 ci_level = 0.95,
-                                 digits = 3){
-  
-  ````
-  
-  One **important correction** in your function: your `Simulation > 1` CI is an empirical quantile interval, not a conventional mean-based confidence interval. So I intentionally documented it as an **empirical confidence interval** rather than calling it a normal-theory CI.
-  
-  Also, this line in your single-point return:
-    
-    ```r
-  Observed_ATE = obs_ATE, digits,
-  ````
-  
-  should be corrected to:
-    
-    ```r
-  Observed_ATE = round(obs_ATE, digits),
-  ```
-  
-  Otherwise `digits` is being returned as an unnamed list element.
-  
+#' @export  
 sensitivity_analysis <- function(Y, treatment, X,
                                  P_C = seq(0.1, 1, 0.1),
                                  RD_CZ = seq(-1, 1, 0.1),
