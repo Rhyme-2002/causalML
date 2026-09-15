@@ -524,4 +524,3 @@ sensitivity_analysis <- function(Y, treatment, X,
                                                                        "Percentage Change of ATE | Prevalence of confounder: ", diverging = TRUE)
   )
 }
-}
