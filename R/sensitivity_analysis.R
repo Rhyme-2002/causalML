@@ -305,17 +305,17 @@ sensitivity_analysis <- function(Y, treatment, X,
   
   run_method <- function(Yv, Xv, treatv) {
     if (causal_method == "causalForest") {
-      causalML::causalForest(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causalForest(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causal_Additive_Forest") {
-      causalML::causal_Additive_Forest(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causal_Additive_Forest(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causal_boosting") {
-      causalML::causal_boosting(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causal_boosting(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causalMARS") {
-      causalML::causalMARS(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causalMARS(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causalBART") {
-      causalML::causalBART(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causalBART(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "parametric_standardization") {
-      causalML::parametric_standardization(Y = Yv, X = Xv, treatment = treatv)$ATE
+      parametric_standardization(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else {
       stop("Invalid causal method.")
     }
