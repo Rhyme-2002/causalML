@@ -340,7 +340,7 @@ compare_model <- function(Y, X, treatment,
   
   RMSE_plot <- ggplot2::ggplot(RMSE_long, ggplot2::aes(x = Model, y = RMSE)) +
     ggplot2::geom_boxplot() +
-    ggplot2::labs(x = "Model", y = "RMSE", title = "RMSE Across Simulations") +
+    ggplot2::labs(x = "Model", y = "RMSE", title = "RMSE Across Model") +
     ggplot2::theme_classic()
   
   ARB_long <- ARB_df |>
@@ -348,7 +348,7 @@ compare_model <- function(Y, X, treatment,
   
   ARB_plot <- ggplot2::ggplot(ARB_long, ggplot2::aes(x = Model, y = ARB)) +
     ggplot2::geom_boxplot() +
-    ggplot2::labs(x = "Model", y = "ARB", title = "ARB Across Simulations") +
+    ggplot2::labs(x = "Model", y = "ARB", title = "ARB Across Model") +
     ggplot2::theme_classic()
   
   result <- list(RMSE_df = RMSE_df, RMSE_long = RMSE_long,
