@@ -14,7 +14,7 @@ sensitivity_analysis(
   Y,
   treatment,
   X,
-  P_C = seq(0.1, 1, 0.1),
+  P_C = seq(0.1, 0.9, 0.1),
   RD_CZ = seq(-1, 1, 0.1),
   RD_CY = seq(-1, 1, 0.1),
   causal_method,
@@ -41,7 +41,7 @@ sensitivity_analysis(
   \item{P_C}{
     A numeric vector specifying the assumed prevalence of the unmeasured
     binary confounder C. Values must be between 0 and 1.
-    The default is \code{seq(0.1, 1, 0.1)}.
+    The default is \code{seq(0.1, 0.9, 0.1)}.
   }
 
   \item{RD_CZ}{
