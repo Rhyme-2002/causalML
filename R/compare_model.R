@@ -292,9 +292,9 @@ compare_model <- function(Y, X, treatment,
     }
     
     if("causalMARS" %in% compare_model){
-      model_mars <- causalMARS(x = X, y = Y1, treatment = treatment)
-      CATE <- model_mars$cate
-      ATE <- model_mars$ate
+      model_mars <- causalMARS(X = X, Y = Y1, treatment = treatment)
+      CATE <- model_mars$CATE
+      ATE <- model_mars$ATE
       RMSE_df[i, "causalMARS"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causalMARS"] <- abs((ATE - true_ATE) / true_ATE)
       
@@ -302,9 +302,9 @@ compare_model <- function(Y, X, treatment,
     }
     
     if("causal_boosting" %in% compare_model){
-      model_boosting <- causal_boosting(X = X, y = Y1, treatment = treatment)
-      CATE <- model_boosting$cate
-      ATE <- model_boosting$ate
+      model_boosting <- causal_boosting(X = X, Y = Y1, treatment = treatment)
+      CATE <- model_boosting$CATE
+      ATE <- model_boosting$ATE
       RMSE_df[i, "causal_boosting"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causal_boosting"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       print("CAUSAL BOOSTING END")
@@ -312,9 +312,8 @@ compare_model <- function(Y, X, treatment,
     
     if("causal_forest" %in% compare_model){
       model_forest <- causalForest(X = X, Y = Y1, treatment = treatment)
-      result_forest <- predict_causal(object = model_forest, newdata = X)
-      CATE <- result_forest$CATE
-      ATE <- result_forest$ATE
+      CATE <- model_forest$CATE
+      ATE <- model_forest$ATE
       RMSE_df[i, "causal_forest"] <- sqrt(mean((CATE$CATE - true_CATE)^2))
       ARB_df[i, "causal_forest"] <- abs((ATE - true_ATE) / true_ATE)
       print("CAUSAL FOREST END")
