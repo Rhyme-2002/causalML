@@ -64,7 +64,7 @@ causalForest <- function(X, Y, treatment, no_of_tree = 500){
   cate <- predict(model)$predictions
 
   # ATE: average treatment effect (doubly robust estimate)
-  ate <- grf::average_treatment_effect(model, target.sample = "all")
+  ate <- mean(cate, na.rm = TRUE)
 
   return(list(
     model = model,
