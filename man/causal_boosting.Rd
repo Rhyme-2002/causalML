@@ -41,13 +41,13 @@ causal_boosting(X, Y, treatment, n_trees = 100, max_leaves = 4,
   A list containing:
     \itemize{
       \item \code{trees}: A list of fitted causal trees.
-      \item \code{cate}: Estimated conditional average treatment effects.
-      \item \code{ate}: Estimated average treatment effect.
+      \item \code{CATE}: Estimated conditional average treatment effects.
+      \item \code{ATE}: Estimated average treatment effect.
       \item \code{y0_hat}: Estimated potential outcomes under control.
       \item \code{y1_hat}: Estimated potential outcomes under treatment.
       \item \code{tauhat}: CATE estimates from each boosting iteration.
       \item \code{residuals}: Final model residuals.
-      \item \code{mse}: Mean squared error for each boosting iteration.
+      \item \code{MSE}: Mean squared error for each boosting iteration.
       \item \code{n_trees}: Number of trees used.
       \item \code{max_leaves}: Maximum number of leaves per tree.
       \item \code{learning_rate}: Learning rate used for boosting.
@@ -66,8 +66,8 @@ causal_boosting(X, Y, treatment, n_trees = 100, max_leaves = 4,
     
     result <- causal_boosting(X = X, Y = Y, treatment = treatment)
     
-    result$cate
-    result$ate
+    result$CATE
+    result$ATE
   }
 }
 
