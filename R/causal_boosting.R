@@ -324,7 +324,7 @@ causal_boosting <- function(X, Y, treatment, n_trees = 100, max_leaves = 4,
   
   cate <- G1 - G0
   ate <- mean(cate)
-  result <- list(trees = trees, cate = cate, ate = ate, y0_hat = G0, y1_hat = G1,
+  result <- list(trees = trees, CATE = cate, ATE = ate, y0_hat = G0, y1_hat = G1,
                  tauhat = tauhat, residuals = residual, mse = mse, n_trees = n_trees,
                  max_leaves = max_leaves, learning_rate = learning_rate, split_spread = split_spread)
   
