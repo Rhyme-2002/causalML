@@ -29,11 +29,19 @@ causalForest(X, Y, treatment, no_of_tree = 500)
 }
 
 \value{
-  An object of class \code{causal_forest} returned by
-  \code{\link[grf]{causal_forest}}. The returned object contains
-  the fitted causal forest and can be used with prediction and
-  treatment-effect estimation methods provided by the \pkg{grf}
-  package.
+  A list with three elements:
+  \describe{
+    \item{model}{An object of class \code{causal_forest} returned by
+    \code{\link[grf]{causal_forest}}. Can be used directly with
+    prediction and treatment-effect estimation methods provided by the
+    \pkg{grf} package.}
+    \item{CATE}{A numeric vector of out-of-bag conditional average
+    treatment effect (CATE) estimates, one per observation in
+    \code{X}.}
+    \item{ATE}{A named numeric vector with the average treatment
+    effect (ATE) estimate and its standard error, as returned by
+    \code{\link[grf]{average_treatment_effect}}.}
+  }
 }
 
 \details{
@@ -43,9 +51,10 @@ causalForest(X, Y, treatment, no_of_tree = 500)
   effects by allowing the treatment effect to vary across observations
   according to their covariate values.
   
-  The fitted model can be used to estimate conditional average
-  treatment effects (CATE) using the prediction methods provided by
-  \pkg{grf}.
+  In addition to the fitted model, this function returns out-of-bag
+  conditional average treatment effect (CATE) estimates for each
+  observation, and a doubly robust estimate of the overall average
+  treatment effect (ATE) across the sample.
 }
 
 \examples{
@@ -58,8 +67,14 @@ causalForest(X, Y, treatment, no_of_tree = 500)
     
     result <- causalForest(X = X, Y = Y, treatment = treatment, no_of_tree = 500)
     
-    # Estimate CATE
-    cate <- predict(result)$predictions
+    # Fitted causal_forest object
+    result$model
+    
+    # Conditional average treatment effects (CATE)
+    result$CATE
+    
+    # Average treatment effect (ATE)
+    result$ATE
   }
 }
 
