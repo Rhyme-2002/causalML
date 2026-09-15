@@ -136,7 +136,7 @@ distribute_C <- function(Y, Z, frequency_table, set_seed = 102) {
 #'   for adjustment in the causal effect estimation.
 #' @param P_C A numeric vector specifying the assumed prevalence of the
 #'   unmeasured binary confounder. Values must lie between 0 and 1.
-#'   Default is \code{seq(0.1, 1, 0.1)}.
+#'   Default is \code{seq(0.1, 0.9, 0.1)}.
 #' @param RD_CZ A numeric vector specifying the assumed risk difference
 #'   between the unmeasured confounder (\code{C}) and treatment (\code{Z}).
 #'   Values are typically specified between -1 and 1.
@@ -295,7 +295,7 @@ distribute_C <- function(Y, Z, frequency_table, set_seed = 102) {
 #' @importFrom stats quantile
 #' @export  
 sensitivity_analysis <- function(Y, treatment, X,
-                                 P_C = seq(0.1, 1, 0.1),
+                                 P_C = seq(0.1, 0.9, 0.1),
                                  RD_CZ = seq(-1, 1, 0.1),
                                  RD_CY  = seq(-1, 1, 0.1),
                                  causal_method,
@@ -482,7 +482,7 @@ sensitivity_analysis <- function(Y, treatment, X,
   # single grid point -> return everything (mean + CI) except the plots (and no labels needed)
   if (single_point) {
     return(list(
-      Observed_ATE      = obs_ATE, digits,
+      Observed_ATE      = obs_ATE,
       N_Simulations     = Simulation,
       CI_Level          = ci_level,
       Results           = grid,
