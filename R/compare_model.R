@@ -314,7 +314,7 @@ compare_model <- function(Y, X, treatment,
       model_forest <- causalForest(X = X, Y = Y1, treatment = treatment)
       CATE <- model_forest$CATE
       ATE <- model_forest$ATE
-      RMSE_df[i, "causal_forest"] <- sqrt(mean((CATE$CATE - true_CATE)^2))
+      RMSE_df[i, "causal_forest"] <- sqrt(mean((CATE - true_CATE)^2))
       ARB_df[i, "causal_forest"] <- abs((ATE - true_ATE) / true_ATE)
       print("CAUSAL FOREST END")
     }
