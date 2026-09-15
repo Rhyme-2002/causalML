@@ -104,7 +104,7 @@ distribute_C <- function(Y, Z, frequency_table, set_seed = 102) {
   }
   
   return(C)
-
+}
 
 #' Sensitivity Analysis for an Unmeasured Binary Confounder
 #'
