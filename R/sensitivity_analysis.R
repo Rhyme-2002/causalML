@@ -330,24 +330,49 @@ sensitivity_analysis <- function(Y, treatment, X,
   
   effect_mat <- matrix(NA_real_, nrow = n_grid, ncol = Simulation)
   
-  for (i in seq_len(Simulation)) {
-    for (row in seq_len(n_grid)) {
-      
-      j <- grid$P_C[row]; k <- grid$RD_CZ[row]; l <- grid$RD_CY[row]
-      
-      con_table <- construct_3way_table(Y = Y, Z = treatment, P_C = j, RD_CZ = k, RD_CY = l)
-      
-      if (is.null(con_table)) {
-        if (i == 1) cat("This combination is not feasible: P_C :", j, ", RD_CZ :", k, ", RD_CY :", l, "\n")
-        next
-      }
-      
-      conf_column <- distribute_C(Y = Y, Z = treatment, frequency_table = con_table, set_seed = i)
-      new_X <- cbind(X, C = conf_column)
-      
-      effect_mat[row, i] <- run_method(Y, new_X, treatment)
+for (i in seq_len(Simulation)) {
+
+  cat("\n====================================\n")
+  cat("Simulation", i, "of", Simulation, "\n")
+  cat("====================================\n")
+
+  for (row in seq_len(n_grid)) {
+
+    # Progress percentage
+    if (row %% 100 == 0 || row == 1 || row == n_grid) {
+      percentage <- round(row / n_grid * 100, 1)
+
+      cat(
+        "\rSimulation ", i, "/", Simulation,
+        " | Combination ", row, "/", n_grid,
+        " | Progress: ", percentage, "%",
+        sep = ""
+      )
+
+      flush.console()
     }
+
+    j <- grid$P_C[row]
+    k <- grid$RD_CZ[row]
+    l <- grid$RD_CY[row]
+
+    con_table <- construct_3way_table(Y = Y, Z = treatment, P_C = j, RD_CZ = k, RD_CY = l)
+
+    if (is.null(con_table)) {
+      next
+    }
+
+    conf_column <- distribute_C(Y = Y, Z = treatment, frequency_table = con_table, set_seed = i)
+    new_X <- cbind(X, C = conf_column)
+    effect_mat[row, i] <- run_method(Y, new_X, treatment)
   }
+
+  cat("\nSimulation", i, "completed.\n")
+}
+
+cat("\n====================================\n")
+cat("ALL SIMULATIONS COMPLETED\n")
+cat("====================================\n")
   
   names(grid) <- c("Confounder_Prevalence", "RD_Confounder_Treatment", "RD_Confounder_Outcome")
   
