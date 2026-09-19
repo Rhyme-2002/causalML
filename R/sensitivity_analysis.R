@@ -367,9 +367,19 @@ sensitivity_analysis <- function(Y, treatment, X,
   effect_mat <- matrix(NA_real_, nrow = n_grid, ncol = Simulation)
   
   # ---------------------------------------------------------------------
-  # Timing helper (seconds)
+  # Timing helper: hours, minutes, seconds (zero units are dropped)
   # ---------------------------------------------------------------------
-  fmt_sec <- function(secs) paste0(round(secs), " seconds")
+  fmt_time <- function(secs) {
+    secs <- round(secs)
+    h <- secs %/% 3600
+    m <- (secs %% 3600) %/% 60
+    s <- secs %% 60
+    parts <- character(0)
+    if (h > 0) parts <- c(parts, paste0(h, if (h == 1) " hour" else " hours"))
+    if (m > 0) parts <- c(parts, paste0(m, if (m == 1) " minute" else " minutes"))
+    if (s > 0 || length(parts) == 0) parts <- c(parts, paste0(s, if (s == 1) " second" else " seconds"))
+    paste(parts, collapse = " ")
+  }
   start_time <- Sys.time()
   iter_times <- numeric(Simulation)
   
@@ -414,11 +424,11 @@ sensitivity_analysis <- function(Y, treatment, X,
       remaining <- avg_time * (Simulation - i)
       total_est <- elapsed + remaining
       
-      cat("Current simulation time   :", fmt_sec(iter_times[i]), "\n")
-      cat("Average simulation time   :", fmt_sec(avg_time), "\n")
-      cat("Elapsed time              :", fmt_sec(elapsed), "\n")
-      cat("Estimated remaining time  :", fmt_sec(remaining), "\n")
-      cat("Estimated total time      :", fmt_sec(total_est), "\n")
+      cat("Current simulation time   :", fmt_time(iter_times[i]), "\n")
+      cat("Average simulation time   :", fmt_time(avg_time), "\n")
+      cat("Elapsed time              :", fmt_time(elapsed), "\n")
+      cat("Estimated remaining time  :", fmt_time(remaining), "\n")
+      cat("Estimated total time      :", fmt_time(total_est), "\n")
       flush.console()
     }
   }
@@ -426,7 +436,7 @@ sensitivity_analysis <- function(Y, treatment, X,
   cat("\n====================================\n")
   cat("ALL SIMULATIONS COMPLETED\n")
   if (Simulation > 1) {
-    cat("Total time:", fmt_sec(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
+    cat("Total time:", fmt_time(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
   }
   cat("====================================\n")
   
