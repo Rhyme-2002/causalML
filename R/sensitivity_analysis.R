@@ -330,49 +330,98 @@ sensitivity_analysis <- function(Y, treatment, X,
   
   effect_mat <- matrix(NA_real_, nrow = n_grid, ncol = Simulation)
   
-for (i in seq_len(Simulation)) {
-
-  cat("\n====================================\n")
-  cat("Simulation", i, "of", Simulation, "\n")
-  cat("====================================\n")
-
-  for (row in seq_len(n_grid)) {
-
-    # Progress percentage
-    if (row %% 100 == 0 || row == 1 || row == n_grid) {
-      percentage <- round(row / n_grid * 100, 1)
-
-      cat(
-        "\rSimulation ", i, "/", Simulation,
-        " | Combination ", row, "/", n_grid,
-        " | Progress: ", percentage, "%",
-        sep = ""
-      )
-
+  # <<< ADDED: timing setup
+  format_time <- function(secs){
+    secs <- round(secs)
+    sprintf("%02d:%02d:%02d", secs %/% 3600, (secs %% 3600) %/% 60, secs %% 60)
+  }
+  start_time <- Sys.time()
+  iter_times <- numeric(Simulation)
+  # <<< END ADDED
+  
+  for (i in seq_len(Simulation)) {
+    
+    iter_start <- Sys.time()   # <<< ADDED
+    
+    cat("\n====================================\n")
+    cat("Simulation", i, "of", Simulation, "\n")
+    cat("====================================\n")
+    
+    for (row in seq_len(n_grid)) {
+      
+      # Progress percentage
+      if (row %% 100 == 0 || row == 1 || row == n_grid) {
+        percentage <- round(row / n_grid * 100, 1)
+        
+        cat(
+          "\rSimulation ", i, "/", Simulation,
+          " | Combination ", row, "/", n_grid,
+          " | Progress: ", percentage, "%",
+          sep = ""
+        )
+        
+        flush.console()
+      }
+      
+      j <- grid$P_C[row]
+      k <- grid$RD_CZ[row]
+      l <- grid$RD_CY[row]
+      
+      con_table <- construct_3way_table(Y = Y, Z = treatment, P_C = j, RD_CZ = k, RD_CY = l)
+      
+      if (is.null(con_table)) {
+        # <<< ADDED: report infeasible combination (only when a single combination is given)
+        if (single_point && i == 1) {
+          cat("\nCombination is NOT feasible: P_C =", j,
+              "| RD_CZ =", k, "| RD_CY =", l, "\n")
+          flush.console()
+        }
+        # <<< END ADDED
+        next
+      }
+      
+      conf_column <- distribute_C(Y = Y, Z = treatment, frequency_table = con_table, set_seed = i)
+      new_X <- cbind(X, C = conf_column)
+      effect_mat[row, i] <- run_method(Y, new_X, treatment)
+    }
+    
+    cat("\nSimulation", i, "completed.\n")
+    
+    # <<< ADDED: time report (only when Simulation > 1)
+    iter_times[i] <- as.numeric(difftime(Sys.time(), iter_start, units = "secs"))
+    if (Simulation > 1) {
+      elapsed   <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
+      avg_time  <- mean(iter_times[1:i])
+      remaining <- avg_time * (Simulation - i)
+      total_est <- elapsed + remaining
+      
+      cat(sprintf(
+        paste0("Simulation %d/%d finished | %.1f%% done\n",
+               "  This simulation : %s\n",
+               "  Avg per sim     : %s\n",
+               "  Elapsed         : %s\n",
+               "  Remaining (est.): %s\n",
+               "  Total (est.)    : %s\n"),
+        i, Simulation, i / Simulation * 100,
+        format_time(iter_times[i]),
+        format_time(avg_time),
+        format_time(elapsed),
+        format_time(remaining),
+        format_time(total_est)
+      ))
       flush.console()
     }
-
-    j <- grid$P_C[row]
-    k <- grid$RD_CZ[row]
-    l <- grid$RD_CY[row]
-
-    con_table <- construct_3way_table(Y = Y, Z = treatment, P_C = j, RD_CZ = k, RD_CY = l)
-
-    if (is.null(con_table)) {
-      next
-    }
-
-    conf_column <- distribute_C(Y = Y, Z = treatment, frequency_table = con_table, set_seed = i)
-    new_X <- cbind(X, C = conf_column)
-    effect_mat[row, i] <- run_method(Y, new_X, treatment)
+    # <<< END ADDED
   }
-
-  cat("\nSimulation", i, "completed.\n")
-}
-
-cat("\n====================================\n")
-cat("ALL SIMULATIONS COMPLETED\n")
-cat("====================================\n")
+  
+  cat("\n====================================\n")
+  cat("ALL SIMULATIONS COMPLETED\n")
+  # <<< ADDED
+  if (Simulation > 1) {
+    cat("Total time:", format_time(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
+  }
+  # <<< END ADDED
+  cat("====================================\n")
   
   names(grid) <- c("Confounder_Prevalence", "RD_Confounder_Treatment", "RD_Confounder_Outcome")
   
@@ -418,13 +467,11 @@ cat("====================================\n")
     plots
   }
   
-
   exclude_from_plot <- function(df) {
     rd_sum <- df$RD_Confounder_Outcome + df$RD_Confounder_Treatment
     (df$Confounder_Prevalence == rd_sum) & (rd_sum == 1)
   }
   
-
   if (Simulation == 1) {
     adjust_ATE     <- effect_mat[, 1]
     per_change     <- abs(adjust_ATE - obs_ATE) / abs(obs_ATE) * 100
