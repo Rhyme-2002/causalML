@@ -346,7 +346,7 @@ compare_model <- function(Y, X, treatment,
     ATE <- model_parametric_standardization$ATE
     RMSE_df[i, "parametric_standardization"] <- sqrt(mean((CATE - true_CATE)^2))
     ARB_df[i, "parametric_standardization"] <- abs((ATE - true_ATE) / true_ATE)
-  }
+    
   # time & sim info
     iter_times[i] <- as.numeric(difftime(Sys.time(), iter_start, units = "secs"))
     elapsed       <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
