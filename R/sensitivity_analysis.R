@@ -328,20 +328,54 @@ sensitivity_analysis <- function(Y, treatment, X,
   
   single_point <- (length(P_C) == 1 && length(RD_CZ) == 1 && length(RD_CY) == 1)
   
+  # ---------------------------------------------------------------------
+  # Feasibility check (done ONCE - it does not depend on the simulation)
+  # ---------------------------------------------------------------------
+  tables   <- vector("list", n_grid)
+  feasible <- logical(n_grid)
+  for (row in seq_len(n_grid)) {
+    tab <- construct_3way_table(Y = Y, Z = treatment,
+                                P_C = grid$P_C[row],
+                                RD_CZ = grid$RD_CZ[row],
+                                RD_CY = grid$RD_CY[row])
+    if (!is.null(tab)) {
+      tables[[row]] <- tab
+      feasible[row] <- TRUE
+    }
+  }
+  
+  if (single_point && !feasible[1]) {
+    cat("\n====================================\n")
+    cat("This combination is NOT feasible:",
+        "P_C =", grid$P_C[1],
+        "| RD_CZ =", grid$RD_CZ[1],
+        "| RD_CY =", grid$RD_CY[1], "\n")
+    cat("====================================\n")
+    names(grid) <- c("Confounder_Prevalence", "RD_Confounder_Treatment", "RD_Confounder_Outcome")
+    return(invisible(list(
+      Observed_ATE  = obs_ATE,
+      N_Simulations = Simulation,
+      Results       = grid[0, ]
+    )))
+  }
+  
+  if (!single_point && any(!feasible)) {
+    cat("\n", sum(!feasible), " of ", n_grid,
+        " combinations are NOT feasible and will be skipped.\n", sep = "")
+  }
+  
   effect_mat <- matrix(NA_real_, nrow = n_grid, ncol = Simulation)
   
-  # <<< ADDED: timing setup
-  format_time <- function(secs){
-    secs <- round(secs)
-    sprintf("%02d:%02d:%02d", secs %/% 3600, (secs %% 3600) %/% 60, secs %% 60)
-  }
+  # ---------------------------------------------------------------------
+  # Timing helper (seconds)
+  # ---------------------------------------------------------------------
+  fmt_sec <- function(secs) paste0(round(secs), " seconds")
   start_time <- Sys.time()
   iter_times <- numeric(Simulation)
-  # <<< END ADDED
   
   for (i in seq_len(Simulation)) {
     
-    iter_start <- Sys.time()   # <<< ADDED
+    iter_start <- Sys.time()
     
     cat("\n====================================\n")
     cat("Simulation", i, "of", Simulation, "\n")
@@ -352,42 +386,27 @@ sensitivity_analysis <- function(Y, treatment, X,
       # Progress percentage
       if (row %% 100 == 0 || row == 1 || row == n_grid) {
         percentage <- round(row / n_grid * 100, 1)
-        
         cat(
           "\rSimulation ", i, "/", Simulation,
           " | Combination ", row, "/", n_grid,
           " | Progress: ", percentage, "%",
           sep = ""
         )
-        
         flush.console()
       }
       
-      j <- grid$P_C[row]
-      k <- grid$RD_CZ[row]
-      l <- grid$RD_CY[row]
+      if (!feasible[row]) next
       
-      con_table <- construct_3way_table(Y = Y, Z = treatment, P_C = j, RD_CZ = k, RD_CY = l)
-      
-      if (is.null(con_table)) {
-        # <<< ADDED: report infeasible combination (only when a single combination is given)
-        if (single_point && i == 1) {
-          cat("\nCombination is NOT feasible: P_C =", j,
-              "| RD_CZ =", k, "| RD_CY =", l, "\n")
-          flush.console()
-        }
-        # <<< END ADDED
-        next
-      }
-      
-      conf_column <- distribute_C(Y = Y, Z = treatment, frequency_table = con_table, set_seed = i)
+      conf_column <- distribute_C(Y = Y, Z = treatment,
+                                  frequency_table = tables[[row]],
+                                  set_seed = i)
       new_X <- cbind(X, C = conf_column)
       effect_mat[row, i] <- run_method(Y, new_X, treatment)
     }
     
     cat("\nSimulation", i, "completed.\n")
     
-    # <<< ADDED: time report (only when Simulation > 1)
+    # Time report (only when Simulation > 1)
     iter_times[i] <- as.numeric(difftime(Sys.time(), iter_start, units = "secs"))
     if (Simulation > 1) {
       elapsed   <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
@@ -395,32 +414,20 @@ sensitivity_analysis <- function(Y, treatment, X,
       remaining <- avg_time * (Simulation - i)
       total_est <- elapsed + remaining
       
-      cat(sprintf(
-        paste0("Simulation %d/%d finished | %.1f%% done\n",
-               "  This simulation : %s\n",
-               "  Avg per sim     : %s\n",
-               "  Elapsed         : %s\n",
-               "  Remaining (est.): %s\n",
-               "  Total (est.)    : %s\n"),
-        i, Simulation, i / Simulation * 100,
-        format_time(iter_times[i]),
-        format_time(avg_time),
-        format_time(elapsed),
-        format_time(remaining),
-        format_time(total_est)
-      ))
+      cat("Current simulation time   :", fmt_sec(iter_times[i]), "\n")
+      cat("Average simulation time   :", fmt_sec(avg_time), "\n")
+      cat("Elapsed time              :", fmt_sec(elapsed), "\n")
+      cat("Estimated remaining time  :", fmt_sec(remaining), "\n")
+      cat("Estimated total time      :", fmt_sec(total_est), "\n")
       flush.console()
     }
-    # <<< END ADDED
   }
   
   cat("\n====================================\n")
   cat("ALL SIMULATIONS COMPLETED\n")
-  # <<< ADDED
   if (Simulation > 1) {
-    cat("Total time:", format_time(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
+    cat("Total time:", fmt_sec(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
   }
-  # <<< END ADDED
   cat("====================================\n")
   
   names(grid) <- c("Confounder_Prevalence", "RD_Confounder_Treatment", "RD_Confounder_Outcome")
@@ -477,9 +484,9 @@ sensitivity_analysis <- function(Y, treatment, X,
     per_change     <- abs(adjust_ATE - obs_ATE) / abs(obs_ATE) * 100
     dir_per_change <- (adjust_ATE - obs_ATE) / abs(obs_ATE) * 100
     
-    grid$Adjusted_ATE          <- round(adjust_ATE, digits)
-    grid$Abs_Percent_Change    <- round(per_change, digits)
-    grid$Percent_Change <- round(dir_per_change, digits)
+    grid$Adjusted_ATE       <- round(adjust_ATE, digits)
+    grid$Abs_Percent_Change <- round(per_change, digits)
+    grid$Percent_Change     <- round(dir_per_change, digits)
     grid <- na.omit(grid)
     
     if (single_point) {
@@ -490,8 +497,6 @@ sensitivity_analysis <- function(Y, treatment, X,
       ))
     }
     
-    # labels built on a SEPARATE data frame, used only for plotting --
-    # grid itself (returned as Results) never gets these columns
     grid_labeled <- grid
     grid_labeled$Label_Adjusted_ATE  <- as.character(round(grid_labeled$Adjusted_ATE, 4))
     grid_labeled$Label_Abs_Change    <- as.character(round(grid_labeled$Abs_Percent_Change, 4))
@@ -551,7 +556,6 @@ sensitivity_analysis <- function(Y, treatment, X,
   grid       <- grid[row_ok, ]
   effect_mat <- effect_mat[row_ok, , drop = FALSE]
   
-  # single grid point -> return everything (mean + CI) except the plots (and no labels needed)
   if (single_point) {
     return(list(
       Observed_ATE      = obs_ATE,
@@ -562,8 +566,6 @@ sensitivity_analysis <- function(Y, treatment, X,
     ))
   }
   
-  # labels built on a SEPARATE data frame, used only for plotting --
-  # grid itself (returned as Results) never gets these columns
   grid_labeled <- grid
   grid_labeled$Label_Adjusted_ATE <- paste0(
     grid_labeled$Adjusted_ATE, " [", grid_labeled$Adjusted_ATE_CI_Lower, ", ", grid_labeled$Adjusted_ATE_CI_Upper, "]"
