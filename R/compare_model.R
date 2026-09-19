@@ -271,18 +271,19 @@ compare_model <- function(Y, X, treatment,
                                                   ncol = length(model_names),
                                                   dimnames = list(NULL, model_names)))
   percentage_of_exposure_per_iteration <- c()
-  # time formate
-  format_time <- function(secs){
-    secs <- round(secs)
-    sprintf("%02d:%02d:%02d", secs %/% 3600, (secs %% 3600) %/% 60, secs %% 60)
-  }
+  
+  # time format (seconds)
+  fmt_sec <- function(secs) paste0(round(secs), " seconds")
   start_time <- Sys.time()
   iter_times <- numeric(sim)
   
   for(i in 1:sim){
-    # time & sim info  print
     iter_start <- Sys.time()
-    cat(sprintf("\n>>> Simulation %d of %d is running...\n", i, sim))
+    
+    # ---- simulation START notification ----
+    cat("\n====================================\n")
+    cat(sprintf("Simulation %d of %d is RUNNING...\n", i, sim))
+    cat("====================================\n")
     flush.console()
     
     Y1 <- rbinom(n = nrow(X), size = 1, prob = sim_data$pi_factual)
@@ -347,30 +348,28 @@ compare_model <- function(Y, X, treatment,
     RMSE_df[i, "parametric_standardization"] <- sqrt(mean((CATE - true_CATE)^2))
     ARB_df[i, "parametric_standardization"] <- abs((ATE - true_ATE) / true_ATE)
     
-  # time & sim info
+    # ---- simulation COMPLETED notification + time report ----
     iter_times[i] <- as.numeric(difftime(Sys.time(), iter_start, units = "secs"))
     elapsed       <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
     avg_time      <- mean(iter_times[1:i])
     remaining     <- avg_time * (sim - i)
     total_est     <- elapsed + remaining
-
-    cat(sprintf(
-      paste0("Simulation %d/%d finished | %.1f%% done\n",
-             " Current simulation time : %s\n",
-             "  Average simulation time : %s\n",
-             "  Elapsed time         : %s\n",
-             "  Estimated remaining time: %s\n",
-             "  Estimated total time    : %s\n"),
-      i, sim, i / sim * 100,
-      format_time(iter_times[i]),
-      format_time(avg_time),
-      format_time(elapsed),
-      format_time(remaining),
-      format_time(total_est)
-    ))
+    
+    cat("\n------------------------------------\n")
+    cat(sprintf("Simulation %d of %d COMPLETED | %.1f%% done\n", i, sim, i / sim * 100))
+    cat("------------------------------------\n")
+    cat("Current simulation time   :", fmt_sec(iter_times[i]), "\n")
+    cat("Average simulation time   :", fmt_sec(avg_time), "\n")
+    cat("Elapsed time              :", fmt_sec(elapsed), "\n")
+    cat("Estimated remaining time  :", fmt_sec(remaining), "\n")
+    cat("Estimated total time      :", fmt_sec(total_est), "\n")
     flush.console()
-    # <<< END ADDED
   }
+  
+  cat("\n====================================\n")
+  cat("ALL", sim, "SIMULATIONS COMPLETED\n")
+  cat("====================================\n")
+  
   RMSE_long <- RMSE_df |>
     tidyr::pivot_longer(cols = -Simulation, names_to = "Model", values_to = "RMSE")
   
