@@ -272,8 +272,18 @@ compare_model <- function(Y, X, treatment,
                                                   dimnames = list(NULL, model_names)))
   percentage_of_exposure_per_iteration <- c()
   
-  # time format (seconds)
-  fmt_sec <- function(secs) paste0(round(secs), " seconds")
+  # time format: hours, minutes, seconds (zero units are dropped)
+  fmt_time <- function(secs) {
+    secs <- round(secs)
+    h <- secs %/% 3600
+    m <- (secs %% 3600) %/% 60
+    s <- secs %% 60
+    parts <- character(0)
+    if (h > 0) parts <- c(parts, paste0(h, if (h == 1) " hour" else " hours"))
+    if (m > 0) parts <- c(parts, paste0(m, if (m == 1) " minute" else " minutes"))
+    if (s > 0 || length(parts) == 0) parts <- c(parts, paste0(s, if (s == 1) " second" else " seconds"))
+    paste(parts, collapse = " ")
+  }
   start_time <- Sys.time()
   iter_times <- numeric(sim)
   
@@ -358,16 +368,17 @@ compare_model <- function(Y, X, treatment,
     cat("\n------------------------------------\n")
     cat(sprintf("Simulation %d of %d COMPLETED | %.1f%% done\n", i, sim, i / sim * 100))
     cat("------------------------------------\n")
-    cat("Current simulation time   :", fmt_sec(iter_times[i]), "\n")
-    cat("Average simulation time   :", fmt_sec(avg_time), "\n")
-    cat("Elapsed time              :", fmt_sec(elapsed), "\n")
-    cat("Estimated remaining time  :", fmt_sec(remaining), "\n")
-    cat("Estimated total time      :", fmt_sec(total_est), "\n")
+    cat("Current simulation time   :", fmt_time(iter_times[i]), "\n")
+    cat("Average simulation time   :", fmt_time(avg_time), "\n")
+    cat("Elapsed time              :", fmt_time(elapsed), "\n")
+    cat("Estimated remaining time  :", fmt_time(remaining), "\n")
+    cat("Estimated total time      :", fmt_time(total_est), "\n")
     flush.console()
   }
   
   cat("\n====================================\n")
   cat("ALL", sim, "SIMULATIONS COMPLETED\n")
+  cat("Total time:", fmt_time(as.numeric(difftime(Sys.time(), start_time, units = "secs"))), "\n")
   cat("====================================\n")
   
   RMSE_long <- RMSE_df |>
