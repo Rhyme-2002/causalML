@@ -29,4 +29,6 @@ Imports:
     BART,
     grf,
     ggplot2,
-    tidyr
+    tidyr,
+    randomForest,
+    gbm
