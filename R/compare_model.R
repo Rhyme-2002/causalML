@@ -304,13 +304,13 @@ compare_model <- function(Y, X, treatment,
       CATE <- model_bart$CATE
       ATE <- model_bart$ATE
       RMSE_df[i, "BART without PS"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "BART without PS"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "BART without PS"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       
       model_bart_ps <- causalBART(X = X, Y = Y1, treatment = treatment, PS_adjusted = TRUE)
       CATE <- model_bart_ps$CATE
       ATE <- model_bart_ps$ATE
       RMSE_df[i, "BART with PS"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "BART with PS"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "BART with PS"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       
       print("BART END")
     }
@@ -320,7 +320,7 @@ compare_model <- function(Y, X, treatment,
       CATE <- model_mars$CATE
       ATE <- model_mars$ATE
       RMSE_df[i, "causalMARS"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "causalMARS"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "causalMARS"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       
       print("MARS END")
     }
@@ -339,7 +339,7 @@ compare_model <- function(Y, X, treatment,
       CATE <- model_forest$CATE
       ATE <- model_forest$ATE
       RMSE_df[i, "causal_forest"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "causal_forest"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "causal_forest"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       print("CAUSAL FOREST END")
     }
     
@@ -348,7 +348,7 @@ compare_model <- function(Y, X, treatment,
       CATE <- model_addative_forest$CATE
       ATE <- model_addative_forest$ATE
       RMSE_df[i, "causal_Additive_Forest"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "causal_Additive_Forest"] <- abs((ATE - true_ATE) / true_ATE)
+      ARB_df[i, "causal_Additive_Forest"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
       print("ADDITIVE CAUSAL FOREST END")
     }
     
@@ -356,7 +356,7 @@ compare_model <- function(Y, X, treatment,
     CATE <- model_parametric_standardization$CATE
     ATE <- model_parametric_standardization$ATE
     RMSE_df[i, "parametric_standardization"] <- sqrt(mean((CATE - true_CATE)^2))
-    ARB_df[i, "parametric_standardization"] <- abs((ATE - true_ATE) / true_ATE)
+    ARB_df[i, "parametric_standardization"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
     
     # ---- simulation COMPLETED notification + time report ----
     iter_times[i] <- as.numeric(difftime(Sys.time(), iter_start, units = "secs"))
