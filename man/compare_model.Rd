@@ -49,7 +49,7 @@ compare_model(Y, X, treatment, model_data_simulation = "logit", sim = 100,
     Character vector specifying the causal models to be compared.
     Available options are \code{"causalMARS"},
     \code{"causal_boosting"}, \code{"causal_forest"},
-    \code{"causal_BART"}, and \code{"causal_Additive_Forest"}.
+    \code{"causal_BART"}, and \code{"Bayesian_Causal_Forest"}.
     The default compares all five methods.
     
     Parametric standardization is automatically included as a
