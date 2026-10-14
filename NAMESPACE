@@ -1,4 +1,4 @@
-export(causal_Additive_Forest)
+export(Bayesian_Causal_Forest)
 export(causal_boosting)
 export(predict.causalBoosting)
 export(causalMARS)
