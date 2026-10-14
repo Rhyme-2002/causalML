@@ -1,6 +1,6 @@
-\name{causal_Additive_Forest}
-\alias{causal_Additive_Forest}
-\title{Causal Additive Forest}
+\name{Bayesian_Causal_Forest}
+\alias{Bayesian_Causal_Forest}
+\title{Bayesian_Causal_Forest}
 
 \description{
 Estimates conditional average treatment effects (CATE)
@@ -33,7 +33,7 @@ X <- model.matrix(~ x1 + x2)[, -1]
 Y <- rnorm(100)
 treatment <- rbinom(100, 1, 0.5)
 
-result <- causal_Additive_Forest(X = X, Y = Y, treatment = treatment)
+result <- Bayesian_Causal_Forest(X = X, Y = Y, treatment = treatment)
 
 result$model
 result$CATE
