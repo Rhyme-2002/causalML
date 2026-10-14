@@ -1,4 +1,4 @@
-#' Additive Causal Forest
+#' Bayesian Causal Forest
 #'
 #' Estimates conditional average treatment effects (CATE)
 #' and average treatment effect (ATE) using Bayesian Causal Forests.
@@ -25,14 +25,14 @@
 #' Y <- rnorm(100)
 #' treatment <- rbinom(100, 1, 0.5)
 #'
-#' result <- causal_Additive_Forest(X = X, Y = Y,treatment = treatment)
+#' result <- Bayesia_Causal_Forest(X = X, Y = Y,treatment = treatment)
 #' result$fit
 #' result$CATE
 #' result$ATE
 #' }
 #'
 #' @export
-causal_Additive_Forest <- function(X, Y, treatment, nburn = 20, nsim = 100){
+Bayesia_Causal_Forest <- function(X, Y, treatment, nburn = 20, nsim = 100){
   ps_model <- glm(treatment ~ X, family = binomial())
   pihat <- predict(ps_model, type = "response")
   fit <- bcf::bcf(y = Y, z = treatment, x_control = X, pihat = pihat,
