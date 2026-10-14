@@ -25,7 +25,7 @@
 #' @param compare_model Character vector specifying the causal models
 #'   to be compared. Available models are \code{"causalMARS"},
 #'   \code{"causal_boosting"}, \code{"causal_forest"},
-#'   \code{"causal_BART"}, and \code{"causal_Additive_Forest"}.
+#'   \code{"causal_BART"}, and \code{"Bayesian_Causal_Forest"}.
 #'   The default compares all available causal machine learning models.
 #' @param ... Additional arguments passed to the corresponding model
 #'   fitting functions.
@@ -246,14 +246,14 @@
 compare_model <- function(Y, X, treatment,
                           model_data_simulation = "logit",
                           sim = 100, compare_model = c("causalMARS", "causal_boosting",
-                                                       "causal_forest", "causal_BART", "causal_Additive_Forest"), ...){
+                                                       "causal_forest", "causal_BART", "Bayesian_Causal_Forest"), ...){
   
   allowed_sim_model <- c("logit", "BART", "GBM", "Random_Forest", "KNN")
   if(!(model_data_simulation %in% allowed_sim_model)) {
     stop("Invalid model in model_data_simulation.")
   }
   compare_model <- unique(compare_model)
-  allowed_models <- c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "causal_Additive_Forest")
+  allowed_models <- c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "Bayesian_Causal_Forest")
   if(!all(compare_model %in% allowed_models)) {
     stop("Invalid model in compare_model.")
   }
@@ -343,13 +343,13 @@ compare_model <- function(Y, X, treatment,
       print("CAUSAL FOREST END")
     }
     
-    if("causal_Additive_Forest" %in% compare_model){
-      model_addative_forest <- causal_Additive_Forest(X = X, Y = Y1, treatment = treatment)
+    if("Bayesian_Causal_Forest" %in% compare_model){
+      model_addative_forest <- Bayesian_Causal_Forest(X = X, Y = Y1, treatment = treatment)
       CATE <- model_addative_forest$CATE
       ATE <- model_addative_forest$ATE
-      RMSE_df[i, "causal_Additive_Forest"] <- sqrt(mean((CATE - true_CATE)^2))
-      ARB_df[i, "causal_Additive_Forest"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
-      print("ADDITIVE CAUSAL FOREST END")
+      RMSE_df[i, "Bayesian_Causal_Forest"] <- sqrt(mean((CATE - true_CATE)^2))
+      ARB_df[i, "Bayesian_Causal_Forest"] <- round((abs((ATE - true_ATE) / true_ATE)) * 100, 2)
+      print("BAYESIAN CAUSAL FOREST END")
     }
     
     model_parametric_standardization <- parametric_standardization(X = X, Y = Y1, treatment = treatment)
