@@ -14,7 +14,7 @@
 }
 \usage{
 compare_model(Y, X, treatment, model_data_simulation = "logit", sim = 100,
-    compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "causal_Additive_Forest"),
+    compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "Bayesian_Causal_Forest"),
     ...)
 }
 \arguments{
@@ -266,7 +266,7 @@ Comparing methods for estimation of heterogeneous treatment effects using observ
     treatment <- rbinom(100, 1, 0.5)
     
     result <- compare_model(Y = Y, X = X, treatment = treatment, model_data_simulation = "logit", sim = 100,
-      compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "causal_Additive_Forest"))
+      compare_model = c("causalMARS", "causal_boosting", "causal_forest", "causal_BART", "Bayesian_Causal_Forest"))
     
     result$RMSE_df
     result$ARB_df
