@@ -161,6 +161,8 @@ distribute_C <- function(Y, Z, frequency_table, set_seed = 102) {
 #'   Default is \code{0.95}.
 #' @param digits Integer specifying the number of decimal places used for
 #'   reported sensitivity-analysis results. Default is \code{3}.
+#' @param ... Additional arguments passed to the selected causal effect
+#'   estimation method, including method-specific tuning parameters and options.
 #'
 #' @return A list containing the following components:
 #' \describe{
