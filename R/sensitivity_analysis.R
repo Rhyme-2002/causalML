@@ -315,7 +315,9 @@ sensitivity_analysis <- function(Y, treatment, X,
     } else if (causal_method == "causalMARS") {
       causalMARS(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causalBART") {
-      causalBART(Y = Yv, X = Xv, treatment = treatv, ...)$ATE
+      invisible(capture.output(
+    result <- causalBART(Y = Yv, X = Xv, treatment = treatv, ...)
+  ))
     } else if (causal_method == "parametric_standardization") {
       parametric_standardization(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else {
