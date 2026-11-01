@@ -315,9 +315,24 @@ sensitivity_analysis <- function(Y, treatment, X,
     } else if (causal_method == "causalMARS") {
       causalMARS(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causalBART") {
-      invisible(capture.output(
-    result <- causalBART(Y = Yv, X = Xv, treatment = treatv, ...)
-  ))
+    log_file <- tempfile()
+
+  sink(log_file, type = "output")
+  on.exit({
+    while (sink.number(type = "output") > 0) {
+      sink(type = "output")
+    }
+    unlink(log_file)
+  }, add = TRUE)
+
+  result <- causalBART(
+    Y = Yv, X = Xv, treatment = treatv, ...
+  )
+
+  sink(type = "output")
+  unlink(log_file)
+
+  result$ATE
     } else if (causal_method == "parametric_standardization") {
       parametric_standardization(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else {
