@@ -20,7 +20,8 @@ sensitivity_analysis(
   causal_method,
   Simulation = 1,
   ci_level = 0.95,
-  digits = 3
+  digits = 3, 
+...
 )
 }
 
@@ -80,6 +81,10 @@ sensitivity_analysis(
     An integer specifying the number of decimal places used when reporting
     numerical results. The default is 3.
   }
+\item{...}{
+  Additional arguments passed to the selected causal effect estimation
+  method. These may include method-specific tuning parameters and options.
+}
 }
 
 \details{
