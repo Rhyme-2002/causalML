@@ -301,7 +301,7 @@ sensitivity_analysis <- function(Y, treatment, X,
                                  causal_method,
                                  Simulation = 1,
                                  ci_level = 0.95,
-                                 digits = 3){
+                                 digits = 3, ...){
   
   run_method <- function(Yv, Xv, treatv) {
     if (causal_method == "causalForest") {
@@ -313,7 +313,7 @@ sensitivity_analysis <- function(Y, treatment, X,
     } else if (causal_method == "causalMARS") {
       causalMARS(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else if (causal_method == "causalBART") {
-      causalBART(Y = Yv, X = Xv, treatment = treatv)$ATE
+      causalBART(Y = Yv, X = Xv, treatment = treatv, ...)$ATE
     } else if (causal_method == "parametric_standardization") {
       parametric_standardization(Y = Yv, X = Xv, treatment = treatv)$ATE
     } else {
